@@ -1,0 +1,255 @@
+:root {
+    --bg-color: #ffffff;
+    --text-color: #333333;
+    --input-bg: #f8f9fa;
+    --input-border: #dee2e6;
+    --button-bg: #007bff;
+    --button-hover: #0056b3;
+    --circle-stroke: #333;
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] {
+    --bg-color: #1a1a1a;
+    --text-color: #e0e0e0;
+    --input-bg: #2d2d2d;
+    --input-border: #404040;
+    --button-bg: #0d6efd;
+    --button-hover: #0b5ed7;
+    --circle-stroke: #e0e0e0;
+    --shadow: rgba(255, 255, 255, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--button-bg);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 10px var(--shadow);
+    z-index: 1000;
+}
+
+.theme-toggle:hover {
+    background: var(--button-hover);
+}
+
+.input-section {
+    background: var(--input-bg);
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 15px var(--shadow);
+}
+
+.code-input {
+    width: 100%;
+    height: 250px;
+    padding: 15px;
+    border: 2px solid var(--input-border);
+    border-radius: 8px;
+    background: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    resize: vertical;
+    transition: border-color 0.3s ease;
+}
+
+.code-input:focus {
+    outline: none;
+    border-color: var(--button-bg);
+}
+
+.controls {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.generate-btn, .clear-btn {
+    background: var(--button-bg);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.clear-btn {
+    background: #6c757d;
+}
+
+.generate-btn:hover {
+    background: var(--button-hover);
+}
+
+.clear-btn:hover {
+    background: #5a6268;
+}
+
+.diagram-container {
+    background: var(--input-bg);
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 15px var(--shadow);
+    min-height: 500px;
+}
+
+.diagram-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: var(--text-color);
+}
+
+.venn-svg {
+    max-width: 100%;
+    height: auto;
+    background: var(--bg-color);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.circle-text {
+    font-size: 12px;
+    font-weight: bold;
+    fill: var(--text-color);
+    text-anchor: middle;
+    dominant-baseline: middle;
+    pointer-events: none;
+}
+
+.label-text {
+    font-size: 14px;
+    font-weight: bold;
+    fill: var(--text-color);
+    text-anchor: middle;
+    pointer-events: none;
+}
+
+.intersection-text {
+    font-size: 11px;
+    font-weight: bold;
+    fill: var(--text-color);
+    text-anchor: middle;
+    dominant-baseline: middle;
+    pointer-events: none;
+}
+
+.error-message {
+    color: #dc3545;
+    background: rgba(220, 53, 69, 0.1);
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 15px;
+    display: none;
+}
+
+.info-panel {
+    background: var(--input-bg);
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    box-shadow: 0 4px 15px var(--shadow);
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.stat-item {
+    background: var(--bg-color);
+    padding: 15px;
+    border-radius: 6px;
+    border: 1px solid var(--input-border);
+}
+
+.examples {
+    margin-top: 30px;
+    padding: 20px;
+    background: var(--input-bg);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px var(--shadow);
+}
+
+.example-code {
+    background: var(--bg-color);
+    padding: 15px;
+    border-radius: 6px;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    margin: 10px 0;
+    border: 1px solid var(--input-border);
+    white-space: pre-line;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.example-code:hover {
+    background: var(--input-bg);
+}
+
+.legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--bg-color);
+    border-radius: 6px;
+    border: 1px solid var(--input-border);
+}
+
+.legend-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--circle-stroke);
+}
+

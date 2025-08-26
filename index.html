@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador Dinámico de Diagramas de Venn</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="main.js"></script>
+</head>
+<body>
+<button class="theme-toggle" onclick="toggleTheme()">🌙 Tema Oscuro</button>
+
+<div class="container">
+    <div class="header">
+        <h1>Generador Dinámico de Diagramas de Venn</h1>
+        <p>Crea diagramas de Venn con cualquier número de conjuntos y superposiciones complejas</p>
+    </div>
+
+    <div class="input-section">
+        <h3>Ingresa tu código:</h3>
+        <textarea class="code-input" id="codeInput" placeholder="Pega aquí tu código del diagrama de Venn...">vennDiagram
+    title Ecosistema de Desarrollo Multiplataforma
+    A [Frontend]: 45
+    B [Backend]: 38
+    C [Mobile]: 32
+    D [DevOps]: 28
+    E [Database]: 25
+    AB: 12
+    AC: 8
+    AD: 6
+    AE: 4
+    BC: 15
+    BD: 10
+    BE: 7
+    CD: 9
+    CE: 11
+    DE: 13
+    ABC: 5
+    ABD: 3
+    ABE: 2
+    ACD: 4
+    ACE: 3
+    ADE: 2
+    BCD: 6
+    BCE: 4
+    BDE: 5
+    CDE: 3
+    ABCD: 2
+    ABCE: 1
+    ABDE: 1
+    ACDE: 1
+    BCDE: 2
+    ABCDE: 1</textarea>
+        <div class="controls">
+            <button class="generate-btn" onclick="generateDiagram()">Generar Diagrama</button>
+            <button class="clear-btn" onclick="clearDiagram()">Limpiar</button>
+        </div>
+        <div class="error-message" id="errorMessage"></div>
+    </div>
+
+    <div class="diagram-container" id="diagramContainer">
+        <div class="diagram-title" id="diagramTitle">Tu diagrama aparecerá aquí</div>
+        <div id="diagramContent"></div>
+        <div class="legend" id="legend"></div>
+    </div>
+
+    <div class="info-panel" id="infoPanel" style="display: none;">
+        <h3>Estadísticas del Diagrama</h3>
+        <div class="stats" id="stats"></div>
+    </div>
+
+    <div class="examples">
+        <h3>Ejemplos de código:</h3>
+
+        <h4>Ejemplo 1 - Dos conjuntos simples:</h4>
+        <div class="example-code" onclick="loadExample(this)">vennDiagram
+            title Mascotas en el vecindario
+            A [Gatos]: 10
+            B [Perros]: 17
+            AB: 4</div>
+
+        <h4>Ejemplo 2 - Tres conjuntos con superposiciones:</h4>
+        <div class="example-code" onclick="loadExample(this)">vennDiagram
+            title Funcionalidades del Proyecto Phoenix
+            A [WebApp]: 50
+            B [iOS App]: 30
+            C [Android App]: 25
+            AB: 15
+            AC: 12
+            BC: 8
+            ABC: 5</div>
+
+        <h4>Ejemplo 3 - Seis conjuntos SIN intersecciones:</h4>
+        <div class="example-code" onclick="loadExample(this)">vennDiagram
+            title Especialidades en una Empresa de Software
+            A [Frontend]: 35
+            B [Backend]: 28
+            C [Mobile]: 22
+            D [DevOps]: 18
+            E [QA]: 15
+            F [Design]: 12</div>
+
+        <h4>Ejemplo 4 - Cuatro conjuntos (Complejo):</h4>
+        <div class="example-code" onclick="loadExample(this)">vennDiagram
+            title Habilidades del Equipo de Desarrollo
+            A [JavaScript]: 25
+            B [Python]: 20
+            C [React]: 18
+            D [Node.js]: 15
+            AB: 8
+            AC: 12
+            AD: 6
+            BC: 5
+            BD: 7
+            CD: 9
+            ABC: 4
+            ABD: 3
+            ACD: 2
+            BCD: 3
+            ABCD: 1</div>
+
+        <h4>Ejemplo 4 - Cinco conjuntos (Muy Complejo):</h4>
+        <div class="example-code" onclick="loadExample(this)">vennDiagram
+            title Stack Tecnológico Completo
+            A [Frontend]: 30
+            B [Backend]: 25
+            C [Database]: 20
+            D [Cloud]: 18
+            E [Mobile]: 15
+            AB: 10
+            AC: 8
+            AD: 6
+            AE: 7
+            BC: 9
+            BD: 8
+            BE: 5
+            CD: 7
+            CE: 6
+            DE: 8
+            ABC: 4
+            ABD: 3
+            ABE: 2
+            ACD: 3
+            ACE: 2
+            ADE: 2
+            BCD: 4
+            BCE: 3
+            BDE: 3
+            CDE: 2
+            ABCD: 1
+            ABCE: 1
+            ABDE: 1
+            ACDE: 1
+            BCDE: 1
+            ABCDE: 1</div>
+    </div>
+</div>
+
+</body>
+</html>
