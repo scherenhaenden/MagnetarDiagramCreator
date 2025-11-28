@@ -1,0 +1,29 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "This project provides a dynamic Venn Diagram generator capable of visualizing complex set relationships and intersections. It strictly follows the **Magnetar Canonical Project Model**, ensuring a standardized approach to documentation, planning, and governance. The goal is to provide a robust, maintainable, and well-documented codebase for generating Venn diagrams in web and potentially other environments.",
+  "main": "src/index.js",
+  "type": "module",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scherenhaenden/MagnetarDiagramCreator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/scherenhaenden/MagnetarDiagramCreator/issues"
+  },
+  "homepage": "https://github.com/scherenhaenden/MagnetarDiagramCreator#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "jest": "^29.7.0",
+    "playwright": "^1.49.0"
+  }
+}
