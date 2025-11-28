@@ -1,0 +1,56 @@
+# Canonical Project Configuration
+metadata:
+  name: "Venn Diagram Generator"
+  description: "A dynamic tool for generating SVG Venn diagrams from text descriptions."
+  start_date: "2024-05-22"
+  repository: "https://github.com/example/magnetar-viz-venn"
+
+stakeholders:
+  - name: "Jules"
+    role: "Lead Developer"
+    responsibility: "Implementation and Architecture"
+  - name: "User"
+    role: "Product Owner"
+    responsibility: "Requirements and Acceptance"
+
+milestones:
+  - id: "ms-01"
+    name: "Project Initialization"
+    target_date: "2024-05-30"
+    status: "in_progress"
+  - id: "ms-02"
+    name: "Node.js Migration"
+    target_date: "2024-06-15"
+    status: "planned"
+  - id: "ms-03"
+    name: "Feature Expansion"
+    target_date: "2024-07-01"
+    status: "planned"
+
+tasks:
+  - id: "task-101"
+    title: "Create Magnetar Files"
+    owner: "Jules"
+    state: "in_progress"
+    milestone: "ms-01"
+  - id: "task-102"
+    title: "Initialize Project YAML"
+    owner: "Jules"
+    state: "planned"
+    milestone: "ms-01"
+  - id: "task-201"
+    title: "Initialize npm"
+    owner: "TBD"
+    state: "planned"
+    milestone: "ms-02"
+
+risks:
+  - id: "risk-01"
+    description: "Complex overlaps for 5+ sets are difficult to render visually."
+    probability: "Medium"
+    impact: "High"
+    mitigation: "Research alternative layout algorithms."
+
+reporting:
+  frequency: "Weekly"
+  channels: ["GitHub Issues", "Status Updates"]
