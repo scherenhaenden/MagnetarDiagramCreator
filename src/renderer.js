@@ -1,83 +1,4 @@
-let currentTheme = 'dark';
-
-// Colores predefinidos para los conjuntos
-const colors = [
-    'rgba(255, 99, 132, 0.6)',   // Rosa
-    'rgba(54, 162, 235, 0.6)',   // Azul
-    'rgba(255, 206, 86, 0.6)',   // Amarillo
-    'rgba(75, 192, 192, 0.6)',   // Verde agua
-    'rgba(153, 102, 255, 0.6)',  // Púrpura
-    'rgba(255, 159, 64, 0.6)',   // Naranja
-    'rgba(199, 199, 199, 0.6)',  // Gris
-    'rgba(83, 102, 255, 0.6)',   // Azul índigo
-    'rgba(255, 99, 255, 0.6)',   // Magenta
-    'rgba(99, 255, 132, 0.6)'    // Verde lima
-];
-
-const darkColors = [
-    'rgba(255, 99, 132, 0.7)',
-    'rgba(54, 162, 235, 0.7)',
-    'rgba(255, 206, 86, 0.7)',
-    'rgba(75, 192, 192, 0.7)',
-    'rgba(153, 102, 255, 0.7)',
-    'rgba(255, 159, 64, 0.7)',
-    'rgba(199, 199, 199, 0.7)',
-    'rgba(83, 102, 255, 0.7)',
-    'rgba(255, 99, 255, 0.7)',
-    'rgba(99, 255, 132, 0.7)'
-];
-
-function toggleTheme() {
-    const body = document.body;
-    const button = document.querySelector('.theme-toggle');
-
-    if (currentTheme === 'light') {
-        body.setAttribute('data-theme', 'dark');
-        button.innerHTML = '☀️ Tema Claro';
-        currentTheme = 'dark';
-    } else {
-        body.removeAttribute('data-theme');
-        button.innerHTML = '🌙 Tema Oscuro';
-        currentTheme = 'light';
-    }
-
-    // Regenerar diagrama si existe
-    if (document.getElementById('diagramContent').innerHTML) {
-        generateDiagram();
-    }
-}
-
-function parseVennCode(code) {
-    const lines = code.trim().split('\n');
-    const data = {
-        title: '',
-        sets: {},
-        intersections: {}
-    };
-
-    for (let line of lines) {
-        line = line.trim();
-
-        if (line.startsWith('title ')) {
-            data.title = line.substring(6).trim();
-        } else if (line.match(/^[A-Z] \[.+\]: \d+$/)) {
-            const match = line.match(/^([A-Z]) \[(.+)\]: (\d+)$/);
-            if (match) {
-                data.sets[match[1]] = {
-                    label: match[2],
-                    value: parseInt(match[3])
-                };
-            }
-        } else if (line.match(/^[A-Z]{2,}: \d+$/)) {
-            const match = line.match(/^([A-Z]{2,}): (\d+)$/);
-            if (match) {
-                data.intersections[match[1]] = parseInt(match[2]);
-            }
-        }
-    }
-
-    return data;
-}
+import { getCurrentTheme, colors, darkColors } from './theme.js';
 
 function generateCirclePositions(numSets, hasIntersections) {
     const positions = [];
@@ -218,7 +139,7 @@ function adjustForSeparation(positions, setKeys, connections) {
     });
 }
 
-function generateDynamicDiagram(data) {
+export function generateDynamicDiagram(data) {
     const setKeys = Object.keys(data.sets);
     const numSets = setKeys.length;
 
@@ -256,6 +177,7 @@ function generateDynamicDiagram(data) {
         svgWidth = 900;
         svgHeight = 675;
     }
+    const currentTheme = getCurrentTheme();
     const currentColors = currentTheme === 'dark' ? darkColors : colors;
 
     let svg = `<svg class="venn-svg" width="${svgWidth}" height="${svgHeight}" viewBox="0 0 ${svgWidth} ${svgHeight}">`;
@@ -324,111 +246,3 @@ function generateDynamicDiagram(data) {
     svg += '</svg>';
     return svg;
 }
-
-function generateLegend(data) {
-    const setKeys = Object.keys(data.sets);
-    const currentColors = currentTheme === 'dark' ? darkColors : colors;
-    let legend = '';
-
-    setKeys.forEach((key, index) => {
-        const color = currentColors[index % currentColors.length];
-        legend += `
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: ${color};"></div>
-                    <span>${key}: ${data.sets[key].label}</span>
-                </div>
-            `;
-    });
-
-    return legend;
-}
-
-function generateStats(data) {
-    const setKeys = Object.keys(data.sets);
-    const intersectionKeys = Object.keys(data.intersections);
-
-    let totalElements = 0;
-    Object.values(data.sets).forEach(set => totalElements += set.value);
-    Object.values(data.intersections).forEach(value => totalElements += value);
-
-    const stats = `
-            <div class="stat-item">
-                <strong>Conjuntos:</strong> ${setKeys.length}
-            </div>
-            <div class="stat-item">
-                <strong>Intersecciones:</strong> ${intersectionKeys.length}
-            </div>
-            <div class="stat-item">
-                <strong>Total de elementos:</strong> ${totalElements}
-            </div>
-            <div class="stat-item">
-                <strong>Intersección más compleja:</strong> ${intersectionKeys.reduce((a, b) => a.length > b.length ? a : b, '')}
-            </div>
-        `;
-
-    return stats;
-}
-
-function generateDiagram() {
-    const code = document.getElementById('codeInput').value;
-    const errorDiv = document.getElementById('errorMessage');
-    const titleDiv = document.getElementById('diagramTitle');
-    const contentDiv = document.getElementById('diagramContent');
-    const legendDiv = document.getElementById('legend');
-    const infoPanel = document.getElementById('infoPanel');
-    const statsDiv = document.getElementById('stats');
-
-    try {
-        const data = parseVennCode(code);
-
-        if (!data.title) {
-            throw new Error('Falta el título del diagrama');
-        }
-
-        if (Object.keys(data.sets).length === 0) {
-            throw new Error('No se encontraron conjuntos válidos');
-        }
-
-        titleDiv.textContent = data.title;
-
-        const svg = generateDynamicDiagram(data);
-        const legend = generateLegend(data);
-        const stats = generateStats(data);
-
-        contentDiv.innerHTML = svg;
-        legendDiv.innerHTML = legend;
-        statsDiv.innerHTML = stats;
-
-        infoPanel.style.display = 'block';
-        errorDiv.style.display = 'none';
-
-    } catch (error) {
-        errorDiv.textContent = 'Error: ' + error.message;
-        errorDiv.style.display = 'block';
-        contentDiv.innerHTML = '';
-        legendDiv.innerHTML = '';
-        infoPanel.style.display = 'none';
-    }
-}
-
-function clearDiagram() {
-    document.getElementById('codeInput').value = '';
-    document.getElementById('diagramContent').innerHTML = '';
-    document.getElementById('legend').innerHTML = '';
-    document.getElementById('diagramTitle').textContent = 'Tu diagrama aparecerá aquí';
-    document.getElementById('infoPanel').style.display = 'none';
-    document.getElementById('errorMessage').style.display = 'none';
-}
-
-function loadExample(element) {
-    document.getElementById('codeInput').value = element.textContent.trim();
-    generateDiagram();
-}
-
-// Generar diagrama inicial
-window.onload = function() {
-    document.body.setAttribute('data-theme', 'dark');
-    const button = document.querySelector('.theme-toggle');
-    if (button) button.innerHTML = '☀️ Tema Claro';
-    generateDiagram();
-};
